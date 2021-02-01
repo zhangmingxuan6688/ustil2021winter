@@ -1,0 +1,16 @@
+//sql增删改查操作
+//表中数据有 age sex  name
+//增
+insert  into  people
+values('18','男','lu');//对表中数据进行赋值
+//删
+delete from people
+where age=18；//根据判断age是否为18对数据进行删除
+//改
+update people
+set sex="女"
+where sex="男" and age=1//判断是否满足性别为男和年龄为1进行修改
+//查
+select*
+from people
+where age= 18 and name="lu";//同上
