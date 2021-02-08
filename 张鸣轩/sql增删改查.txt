@@ -1,0 +1,24 @@
+create table sql(
+name(10),
+sex(2),
+number char(20),
+);
+
+//增
+
+insert into sql(姓名,性别,出生日期) values('张','男','2001');
+insert into sql(姓名,性别,出生日期) values('王','女','2000'),('赵','男','2002'),('李','女','2003');
+
+//删
+
+delete from sql where name='张'
+truncate sql       //清空数据
+
+//改
+
+update sql set '出生日期'=2002 where '姓名'='张';
+
+//查
+
+select*from table limit 3
+select*from table where '性别'='男'
