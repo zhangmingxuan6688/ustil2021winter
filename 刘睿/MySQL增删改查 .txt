@@ -1,0 +1,188 @@
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> create database test;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> drop database test ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> create database test ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> alter database test
+    -> default character set gb2312
+    -> default collate gb2312_chinese_ci;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show create database test;
++----------+-----------------------------------------------------------------+
+| Database | Create Database                                                 |
++----------+-----------------------------------------------------------------+
+| test     | CREATE DATABASE `test` /*!40100 DEFAULT CHARACTER SET gb2312 */ |
++----------+-----------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> use  test ;
+Database changed
+
+mysql>  CREATE TABLE tb_emp1
+    -> (
+    ->  id INT(11),
+    -> name VARCHAR(25),
+    -> salary FLOAT
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| tb_emp1        |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> DESCRIBE tb_emp1;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int(11)     | YES  |     | NULL    |       |
+| name   | varchar(25) | YES  |     | NULL    |       |
+| salary | float       | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> SHOW CREATE TABLE  tb_emp1;
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table                                                                                                                                                  |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| tb_emp1 | CREATE TABLE `tb_emp1` (
+  `id` int(11) DEFAULT NULL,
+  `name` varchar(25) DEFAULT NULL,
+  `salary` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=gb2312 |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SHOW CREATE TABLE  tb_emp1 \g;
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table                                                                                                                                                  |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| tb_emp1 | CREATE TABLE `tb_emp1` (
+  `id` int(11) DEFAULT NULL,
+  `name` varchar(25) DEFAULT NULL,
+  `salary` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=gb2312 |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> alter table tb_emp1 add age INT(19);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+mysql> ALTER TABLE tb_emp1
+    -> CHANGE salary col3 CHAR(30);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc tb_emp1;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int(11)     | YES  |     | NULL    |       |
+| name  | varchar(25) | YES  |     | NULL    |       |
+| col3  | char(30)    | YES  |     | NULL    |       |
+| age   | int(19)     | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql>  MODIFY name VARCHAR(30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MODIFY name VARCHAR(30)' at line 1
+mysql> ALTER TABLE tb_emp1
+    -> MODIFY name VARCHAR(30);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  ALTER TABLE tb_emp1
+    -> drop col3;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc tb_emp;
+ERROR 1146 (42S02): Table 'test.tb_emp' doesn't exist
+mysql> desc tb_emp1;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int(11)     | YES  |     | NULL    |       |
+| name  | varchar(30) | YES  |     | NULL    |       |
+| age   | int(19)     | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table tb_emp1
+    -> modify name char (30);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table tb_emp1
+    -> change id num  int (11);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc tb_emp1;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| num   | int(11)  | YES  |     | NULL    |       |
+| name  | char(30) | YES  |     | NULL    |       |
+| age   | int(19)  | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
