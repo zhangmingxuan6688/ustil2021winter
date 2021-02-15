@@ -1,0 +1,101 @@
+/*
+-- 2. 定义一个抽象快递包裹类 Package，并由此派生出普通包裹类和加急包裹类。
+要求：
+{{（1）Package 类设计为抽象类，应包含寄件人和收件人姓名、地址和包裹重量属性；
+（2）普通包裹增加首重计费和超首重后部分的的每公斤计费单价属性，按首重 + 超重 * 每公斤计费单价计算总费用。
+（3）加急包裹没 有首重限制，但有加急起价费用属性，按加急起价费 + 重量 * 10 + 加急公里数 * 0.02 计算总费用。
+{{（4）为每个类添加 calculateCost 计算快递费用虚函数。编写测试程序，使用指向基类的指针对各个派生类的虚函数进行调用。
+*/
+#include <iostream>
+#include<cmath>
+#define unitprice 2.5
+#define firstweight 3
+#define urgentfund  20
+class Package {
+private:
+	std::string SenderName;
+	std::string SenderAdress;
+	std::string RecipientName;
+	std::string RecipientAdress;
+	int Weight;
+public:
+	virtual double calculateCost()=0;
+	/*Package(std::string SenderNmae, std::string SenderAdress, int Weight) {
+		this->SenderNmae = SenderNmae;
+		this->SenderAdress = SenderAdress;
+		this->Weight = Weight;
+	}*/
+
+	void Set (std::string SenderNmae,std::string SenderAdress,int Weight,std::string RecipientName,std::string RecipientAdress) {
+		this->SenderName = SenderNmae;
+		this->SenderAdress = SenderAdress;
+		this->Weight = Weight;
+		this->RecipientAdress = RecipientAdress;
+		this->RecipientName = RecipientName;
+	}
+	std::string type;
+	void print();
+	double GetWeight() {
+		return Weight;
+	}
+};
+void Package:: print() {
+	std::cout<< "寄件人:\n" << "姓名:"<<SenderName << std::endl;std::cout<< "地址:" <<SenderAdress<< std::endl;std::cout << "\n收件人:\n" << "姓名:" << RecipientName << std::endl;std::cout << "地址:" << RecipientAdress << std::endl;std::cout<<"包裹重量:"<<Weight<<std::endl;
+
+}
+class NormalPakage :public Package {
+public:
+	virtual double calculateCost();
+	NormalPakage() {
+		type = "NormalPakage";
+	}
+};
+class UrgentPackage :public Package {
+public:
+	virtual double calculateCost();
+	UrgentPackage() {
+		type = "UrgentPackage";														
+	}
+	void SetExpeditedKilometers(double t) {
+		ExpeditedKilometers = t;
+	}
+private:
+	double ExpeditedKilometers;
+};
+double NormalPakage::calculateCost() {
+	double cost;
+	cost = (firstweight + GetWeight()) * unitprice;
+	std::cout <<"费用为：" <<cost << std::endl;
+	return cost;
+}
+//加急起价费 + 重量 * 10 + 加急公里数 * 0.02 
+ double UrgentPackage::calculateCost() {
+	double cost;
+	cost = urgentfund + 10 * GetWeight() + ExpeditedKilometers * 0.02;
+	std::cout << "费用为：" << cost << std::endl;
+	return cost;
+}
+//使用指向基类的指针对各个派生类的虚函数进行调用,打印快递单
+void Display(Package*pt) {
+	if (pt->type == "NormalPakage")
+	{
+		std::cout << "普通包裹\n";
+	}
+	else
+	{
+		std::cout << "加急包裹\n";
+	}
+	pt->print();
+	pt->calculateCost();//************************ virtual
+	std::cout << "打印完毕" << std::endl;
+}
+void main() {
+	NormalPakage NormalPakage;
+	UrgentPackage UrgentPackage;
+	NormalPakage.Set("孙笑川","天宫",10, "马保国", "芜湖开冲");
+	UrgentPackage.Set("马保国", "芜湖开冲", 15, "孙笑川", "天宫"), UrgentPackage.SetExpeditedKilometers(13.5);
+	Display(&NormalPakage);
+	std::cout << "\n\n";
+	Display(&UrgentPackage);
+
+}
