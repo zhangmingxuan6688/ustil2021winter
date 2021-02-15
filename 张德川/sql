@@ -1,0 +1,18 @@
+create table testsix(
+bookno char(20),
+bookname char(20),
+name char(20)
+time char(20)
+timetwo char(20)
+);
+insert into testfive (‘id’,‘name’) values(‘9’,‘6’);
+insert into testfive values(‘9’,‘6’,‘66’,‘99’);
+insert into testfive values(‘2’,‘ez’,‘lanqie’,‘sanxiang’);
+insert into testfive values(‘6’,‘weien’,‘kuangfeng’,‘lianjin’);
+insert into testfive values(‘6’,‘xiaopao’,‘kaza’,‘Faker’);
+select * from testfour where id=‘9’;
+select * from testfour;
+delete from testthree where bookno=9;
+String sql =“delete from test where username=’” + username + “’”;
+delete from testthree；
+update testthree set bookname=2，bookpublic=3，booktype=4 where bookno=9；
