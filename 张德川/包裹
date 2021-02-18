@@ -1,0 +1,88 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Package{
+	string sender;
+	string receiver;
+	string address;
+	double weight;
+public:
+	Package(double sender, string weight, string address, string receiver) 
+  {
+		this->weight = weight;
+		this->receiver = receiver;
+		this->address = address;
+		this->sender = sender
+			;
+	}
+	string getsender() {
+		return sender;
+	}
+	string getreceiver() {
+		return receiver;
+	}
+	string getaddress() {
+		return address;
+	}
+	double getweight() {
+		return weight;
+	}
+	virtual int caculatecost() = 0;
+};
+class normal :Package{
+public:
+	double firstcost;
+	double overcost;
+	double firstweight;
+	double getfirstcost() {
+		return firstcost;
+	}
+	double getovercost() {
+		return overcost;
+	}
+	normal(string sender, string receiver, string address, double weight) :Package(weight, sender, receiver, address) {
+		cout << "请输入快递的重量：" << weight << endl;
+		cout << "请输入快递的发件人：" << sender << endl;
+		cout << "请输入快递的收件人：" << receiver << endl;
+		cout << "请输入快递将要邮寄到的地址：" << address << endl;
+
+	}
+	double caculatecost()
+  {
+		if (getweight() > firstweight)
+			return ((getweight() - firstweight) * 5 + 20);
+		else
+			return firstcost;
+	}
+	
+	void print() {
+		cout << "该邮件的费用为" << calculatecost() << endl;
+	
+	
+};
+class hurry :Package {
+public:
+	double firstprice;
+	double distance;
+
+	hurry(double weight, string sender, string receiver, string address, double distance) :Package(weight, sender, receiver, address) {
+		cout << "快递的重量为：" << weight << endl;
+		cout << "快递的发件人是何人：" << sender << endl;
+		cout << "快递的收件人是何人：" << receiver << endl;
+		cout << "快递将要邮寄到的地址是何地：" << address << endl;
+		
+	}
+	double calculatecost() {
+		return (firstprice + getweight() * 10 + distance * 0.02);
+	}
+	void print() {
+		cout << "总费用为：" << calculatecost() << endl;
+	}
+};
+int main() {
+	normal _package ("埃德加安东尼阿尔瓦雷", "加拿大", "阿拉丁", 666);
+	hurry q_package(666, "埃德加安东尼阿尔瓦雷", "加拿大", "阿拉丁", 999);
+	_package.print();
+	q_package2.print();
+	return 0;
+}
